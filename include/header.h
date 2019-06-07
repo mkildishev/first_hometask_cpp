@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <exception>
 struct Fragment final {
 
 private:
@@ -32,9 +33,11 @@ public:
 };
 
 
+
 class Concatenator {
 public:
-	std::vector<Fragment> shredded(const std::vector<std::string>& data, int fragment_size);
+	std::vector<Fragment> shredder(const std::vector<std::string>& data, uint16_t fragment_size);
+
 private:
 	std::unordered_map<uint16_t, std::string> _id_to_data;
 };
