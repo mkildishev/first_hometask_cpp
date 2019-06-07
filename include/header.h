@@ -1,5 +1,7 @@
 #include <cstdint>
 #include <string>
+#include <vector>
+#include <unordered_map>
 struct Fragment final {
 
 private:
@@ -27,4 +29,12 @@ public:
 	const std::string& get_data() const && {
 		return _data;
 	}
+};
+
+
+class Concatenator {
+public:
+	std::vector<Fragment> shredded(const std::vector<std::string>& data, int fragment_size);
+private:
+	std::unordered_map<uint16_t, std::string> _id_to_data;
 };
