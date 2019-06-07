@@ -3,6 +3,9 @@
 #include <vector>
 #include <unordered_map>
 #include <exception>
+#include <algorithm>
+#include <random>
+#include <ctime> 
 struct Fragment final {
 
 private:
@@ -34,9 +37,10 @@ public:
 
 
 
-class Concatenator {
+class Concatenator final {
 public:
 	std::vector<Fragment> shredder(const std::vector<std::string>& data, uint16_t fragment_size);
+	void concatenate(std::vector<Fragment>&& data);
 
 private:
 	std::unordered_map<uint16_t, std::string> _id_to_data;

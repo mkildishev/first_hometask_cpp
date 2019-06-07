@@ -1,0 +1,5 @@
+﻿  source.cpp
+C:\Users\Alesya\Documents\GitHub\first_hometask_cpp\src\source.cpp(14): warning C4267: инициализация: преобразование из "size_t" в "uint16_t"; возможна потеря данных
+C:\Users\Alesya\Documents\GitHub\first_hometask_cpp\src\source.cpp(23): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  first_homework_niit.vcxproj -> C:\Users\Alesya\Documents\GitHub\first_hometask_cpp\vs\Debug\first_homework_niit.exe
+  first_homework_niit.vcxproj -> C:/Users/Alesya/Documents/GitHub/first_hometask_cpp/vs/Debug/first_homework_niit.pdb (Full PDB)
