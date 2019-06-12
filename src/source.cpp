@@ -2,10 +2,10 @@
 #include <iostream>
 std::vector<Fragment> Concatenator::shredder(const std::vector<std::string>& data, uint16_t fragments_total) {
 	if (data.empty()) {
-		//throw exception
+		throw std::invalid_argument("Data can't be empty!");
 	}
 	if (fragments_total == 0) {
-		//throw exception
+		throw std::invalid_argument("Total fragments can't be zero");
 	}
 	uint16_t id = 0;
 	std::vector<Fragment> fragments;
@@ -25,9 +25,30 @@ std::vector<Fragment> Concatenator::shredder(const std::vector<std::string>& dat
 	return fragments;
 }
 
-void Concatenator::concatenate(std::vector<Fragment>&& data) {
-	for (const auto& fragment : data) {
-		
+
+void Concatenator::concatenate(std::vector<Fragment>& data) {
+	std::unordered_map<uint16_t, ReducedInfo> id_to_redinfo;
+	for (auto& fragment : data) {
+		auto cur_id = fragment.get_id();
+		if (id_to_redinfo.find(cur_id) == id_to_redinfo.end()) {
+			id_to_redinfo.emplace(cur_id, fragment.get_fragments_total());
+		}
+
+		if (id_to_redinfo[cur_id].recieved_fragment_count == fragment.get_fragments_total()) {
+			_id_to_data.erase(cur_id);
+			id_to_redinfo[cur_id].recieved_fragment_count = 0;
+		}
+		id_to_redinfo[cur_id].recieved_fragment_count++;
+		id_to_redinfo[cur_id].recieved_fragments[fragment.get_fragment_index()] = std::move(fragment.get_data());
+
+		if (id_to_redinfo[cur_id].recieved_fragment_count == fragment.get_fragments_total()) {
+			std::string full_string;
+			full_string.resize((fragment.get_fragments_total() + 1) * fragment.get_data_size());
+			for (const auto& str : id_to_redinfo[cur_id].recieved_fragments) {
+				full_string.append(str);
+			}
+			_id_to_data.emplace(cur_id, std::move(full_string));
+		}
 	}
 }
 
