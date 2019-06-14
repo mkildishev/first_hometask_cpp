@@ -43,7 +43,7 @@ void Concatenator::concatenate(std::vector<Fragment>& data) {
 
 		if (id_to_redinfo[cur_id].recieved_fragment_count == fragment.get_fragments_total()) {
 			std::string full_string;
-			full_string.resize((fragment.get_fragments_total() + 1) * fragment.get_data_size());
+			full_string.reserve((fragment.get_fragments_total() + 1) * fragment.get_data_size());
 			for (const auto& str : id_to_redinfo[cur_id].recieved_fragments) {
 				full_string.append(str);
 			}

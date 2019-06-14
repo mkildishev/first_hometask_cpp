@@ -54,7 +54,7 @@ public:
 struct ReducedInfo {
 	ReducedInfo() = default;
 	ReducedInfo(int fragment_count) : recieved_fragments( fragment_count ) {}
-	uint16_t recieved_fragment_count;
+	uint16_t recieved_fragment_count = 0;
 	std::vector<std::string> recieved_fragments;
 };
 
@@ -63,6 +63,19 @@ class Concatenator final {
 public:
 	std::vector<Fragment> shredder(const std::vector<std::string>& data, uint16_t fragment_total);
 	void concatenate(std::vector<Fragment>& data);
+
+	const std::unordered_map<uint16_t, std::string>& get_map() const & {
+		return _id_to_data;
+	}
+
+	std::unordered_map<uint16_t, std::string>&& get_map() & {
+		return std::move(_id_to_data);
+	}
+
+	std::unordered_map<uint16_t, std::string>&& get_map() && = delete;
+	std::unordered_map<uint16_t, std::string>&& get_map() const &&  = delete;
+
+
 private:
 	std::unordered_map<uint16_t, std::string> _id_to_data;
 };
