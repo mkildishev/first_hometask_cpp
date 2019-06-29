@@ -45,7 +45,9 @@ public:
 	std::string&& get_data() && {
 		return std::move(_data);
 	}
-
+        /* A.G. Можно не указывать такую перегрузку. Тогда автоматом будет вызвана const &. 
+	 *      Такую перегрузку следует указывать только если: вы делаете что-то отличное от const & 
+	 *       (удаляете, возвращаете T const &&)*/
 	const std::string& get_data() const && {
 		return _data;
 	}
@@ -71,7 +73,7 @@ public:
 	std::unordered_map<uint16_t, std::string>&& get_map() & {
 		return std::move(_id_to_data);
 	}
-
+        /* A.G. Зачем удалять? */
 	std::unordered_map<uint16_t, std::string>&& get_map() && = delete;
 	std::unordered_map<uint16_t, std::string>&& get_map() const &&  = delete;
 
